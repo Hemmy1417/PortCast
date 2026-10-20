@@ -6,7 +6,7 @@
 
 A market asks one yes-or-no question about a disruption somewhere on the world's shipping network: a strike at a port, a canal's draft limit, a typhoon closing a terminal. People stake GEN on yes or no. When the market may be resolved, every validator reads each named source itself and they agree, word for word, on what it said; stakers can add later reports during an evidence period. Then the validators read the frozen criteria against that record and must agree on one answer. Code pays the winning side from the losing pool, or refunds everyone.
 
-Live app: *(added on deploy)*
+Live app: **[port-cast.vercel.app](https://port-cast.vercel.app/)**
 
 ## What it is
 
