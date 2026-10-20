@@ -4,7 +4,7 @@
 import Link from "next/link";
 
 import { PoolBar, Tag } from "./bits";
-import { chanceText, day, eventType, gen, marketState, verdict, yesChance } from "@/lib/present";
+import { chanceText, day, eventType, gen, marketState, multiplier, multiplierText, verdict, yesChance } from "@/lib/present";
 import type { MarketSummary } from "@/lib/types";
 
 export function stateTone(s: string): "signal" | "hull" | "rule" | "sea" {
@@ -31,6 +31,13 @@ export function MarketRow({ m, active, onHover }: { m: MarketSummary; active?: b
           {m.state === "FINAL" ? `Answer: ${verdict(m.verdict)}` : chanceText(chance)} · {gen(yes + no)} GEN staked
         </span>
       </div>
+      {m.state === "OPEN" ? (
+        <p className="mono mt-1">
+          <span className="text-yes">Yes pays {multiplierText(multiplier("YES", yes, no))}</span>
+          <span className="text-steel"> · </span>
+          <span className="text-no">No pays {multiplierText(multiplier("NO", yes, no))}</span>
+        </p>
+      ) : null}
       <p className="mono mt-1 text-steel">Window {day(m.window_start)} to {day(m.window_end)}</p>
     </Link>
   );

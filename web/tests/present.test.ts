@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { chanceText, day, gen, marketName, moment, toWei, wouldCollect, yesChance } from "@/lib/present";
+import { chanceText, day, gen, marketName, moment, multiplier, multiplierText, toWei, wouldCollect, yesChance } from "@/lib/present";
 import { edgeCases, lint, publisherOf, toJson, type Draft } from "@/lib/studio";
 import type { Config } from "@/lib/types";
 
@@ -18,6 +18,18 @@ describe("words", () => {
     expect(day("2026-10-04")).toBe("4 Oct 2026");
     expect(moment("2026-10-04T23:30:00Z")).toBe("4 Oct 2026, 23:30 UTC");
     expect(marketName("mk-0012")).toBe("Market 12");
+  });
+  it("prices each side as a multiplier", () => {
+    expect(multiplier("YES", G, 3n * G)).toBe(4);
+    expect(multiplier("NO", G, 3n * G)).toBeCloseTo(1.3333, 4);
+    expect(multiplier("YES", G, G, G)).toBe(1.5);
+    expect(multiplier("YES", 0n, G)).toBeNull();
+    expect(multiplier("NO", G, 0n)).toBeNull();
+    expect(multiplier("YES", G, 0n)).toBe(1);
+    expect(multiplierText(2.5)).toBe("×2.50");
+    expect(multiplierText(null)).toBe("no stakes yet");
+    // the multiplier and the preview agree
+    expect(Number(wouldCollect("YES", G, G, 3n * G)) / Number(G)).toBeCloseTo(multiplier("YES", G, 3n * G, G)!, 4);
   });
   it("previews what a stake would collect", () => {
     expect(wouldCollect("YES", G, G, G)).toBe(G + G / 2n);

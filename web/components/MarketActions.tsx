@@ -11,7 +11,7 @@ import { Button, Card, PoolBar, Tag } from "./bits";
 import { Write } from "./Write";
 import { calls } from "@/lib/calls";
 import { filingStage, marketActs, type Act } from "@/lib/acts";
-import { gen, genText, toWei, wouldCollect } from "@/lib/present";
+import { gen, genText, multiplier, multiplierText, toWei, wouldCollect } from "@/lib/present";
 import type { Config, Market, Position } from "@/lib/types";
 
 function StakeForm({ m, minWei }: { m: Market; minWei: bigint }) {
@@ -34,8 +34,15 @@ function StakeForm({ m, minWei }: { m: Market; minWei: bigint }) {
         <span className="label">Stake, in GEN</span>
         <input className="field mono" inputMode="decimal" value={amount} onChange={(e) => setAmount(e.target.value)} />
       </label>
+      {ok ? (
+        <dl className="grid grid-cols-3 gap-px overflow-hidden rounded-tab border border-rule bg-rule text-center">
+          <div className="bg-deck px-2 py-2"><dt className="label">Multiplier</dt><dd className="figure text-[22px]">{multiplierText(multiplier(side, BigInt(m.yes_pool_wei), BigInt(m.no_pool_wei), wei!))}</dd></div>
+          <div className="bg-deck px-2 py-2"><dt className="label">If it wins</dt><dd className="figure text-[22px]">{gen(back)}</dd></div>
+          <div className="bg-deck px-2 py-2"><dt className="label">Profit</dt><dd className={`figure text-[22px] ${back > wei! ? "text-yes" : ""}`}>+{gen(back - wei!)}</dd></div>
+        </dl>
+      ) : null}
       <p className="text-[14px] text-steel">
-        {ok ? <>If {side === "YES" ? "yes" : "no"} wins at today&apos;s pools, this stake collects about <b className="text-hull">{genText(back)}</b>. Pools keep moving until trading closes.</>
+        {ok ? <>In GEN, at today&apos;s pools with your stake added. The pools keep moving until trading closes, so the final multiplier is set by every stake, not just yours. If {side === "YES" ? "no" : "yes"} wins this stake is lost; if the market has no answer it is refunded.</>
           : `A stake is at least ${gen(minWei)} GEN.`}
       </p>
       <Write call={calls.stake(m.market_id, side, wei ?? 0n)} label={`Stake ${ok ? gen(wei!) : ""} GEN on ${side === "YES" ? "yes" : "no"}`} disabled={!ok} />
@@ -107,6 +114,10 @@ export function MarketActions({ m, cfg, address, position, now }: {
           <div className="text-right"><p className="figure text-[30px] leading-none text-no">{gen(no)}</p><p className="label mt-1">GEN on no</p></div>
         </div>
         <PoolBar yes={yes} no={no} className="mt-3" />
+        <div className="mt-3 flex justify-between font-mono text-[13px]">
+          <span className="text-yes">Yes pays {multiplierText(multiplier("YES", yes, no))}</span>
+          <span className="text-no">No pays {multiplierText(multiplier("NO", yes, no))}</span>
+        </div>
         {position && BigInt(position.yes_wei) + BigInt(position.no_wei) > 0n ? (
           <div className="mt-4 border-t border-rule pt-3 text-[14px]">
             <p className="label">Your position</p>

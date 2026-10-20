@@ -106,6 +106,22 @@ export function wouldCollect(side: "YES" | "NO", wei: bigint, yesWei: bigint, no
   return wei + (wei * other) / mine;
 }
 
+/**
+ * What one GEN staked on a side returns if that side wins, at these pools,
+ * counting the stake itself (it joins its side's pool). Null when the side's
+ * pool would still be empty, or when nobody is on the other side yet (a win
+ * then only returns the stake).
+ */
+export function multiplier(side: "YES" | "NO", yesWei: bigint, noWei: bigint, stakeWei = 0n): number | null {
+  const mine = (side === "YES" ? yesWei : noWei) + stakeWei;
+  const other = side === "YES" ? noWei : yesWei;
+  if (mine <= 0n) return null;
+  return Number(((mine + other) * 10_000n) / mine) / 10_000;
+}
+export function multiplierText(m: number | null): string {
+  return m === null ? "no stakes yet" : `×${m.toFixed(2)}`;
+}
+
 export function plural(n: number, word: string, many?: string): string {
   return `${n.toLocaleString("en-GB")} ${n === 1 ? word : many ?? `${word}s`}`;
 }
