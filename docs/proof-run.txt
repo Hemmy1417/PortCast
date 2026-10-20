@@ -1,6 +1,6 @@
 PortCast live proof on GenLayer Studio Next (chain 61997)
 contract 0xA115DbeA84FaA56527e93923670b79933065d4cE
-finished 2026-10-20T14:55:13.739Z: 88 checks, 46 transactions, 0 rounds without agreement asked again
+finished 2026-10-20T19:24:11.656Z: 109 checks, 57 transactions, 0 rounds without agreement asked again
 
 ok      A.create                 CREATOR    create_market   MAJORITY_AGREE  0xfaf0ce1813c4b1fcf723059daae8995d3c3678f264df894ddf91c3a7d2e77b21
 ok      B.create                 CREATOR    create_market   MAJORITY_AGREE  0xf58d81fa930c2b8b10a953cf2326533defb185e9e87d66fbcef687a1da07f9d6
@@ -72,6 +72,21 @@ ok      draw.YES_TRADER          YES_TRADER claim           MAJORITY_AGREE  0x5b
 ok      draw.NO_TRADER           NO_TRADER  claim           MAJORITY_AGREE  0xcbb6e36e7a76216acf0f299ec808b71e14cef213d265f801eb23052d2df93685
 refused claim-nothing            STRANGER   claim           MAJORITY_AGREE  0x13ec139999153dace23f0d52e80091210b71386bd98a3959889372e9e9a84f0b
          [EXPECTED] nothing is owed to this address
+ok      D.create                 CREATOR    create_market   MAJORITY_AGREE  0xde3d0e712915fb86eb791cdd8504a2f8d06fcf782c1e7c420877f9f6110119f4
+ok      D.stake-yes              YES_TRADER stake           MAJORITY_AGREE  0x89d1c77b9d088576865d9f300cc25fdf987ccb7542dd2708439134ae061b751c
+ok      D.stake-no               NO_TRADER  stake           MAJORITY_AGREE  0x482b2800fb6c71200b897182874beb929102b19ae0837b6ec9783b903cabd463
+ok      D.record-1               STRANGER   record_sources  MAJORITY_AGREE  0xa3c5521e89955aaac4eade6358e100ffa49ff0475037f6836ec2a21f9f18760e
+         source 1 of 2: read
+ok      D.record-2               STRANGER   record_sources  MAJORITY_AGREE  0xf293ff7c0ba633a926d5d2075cc54df47e65b7b9cdf432c44439f4c55c52fad9
+         source 2 of 2: unreadable
+ok      D.resolve                STRANGER   resolve         MAJORITY_AGREE  0x24ed6806cdf302e3cc75ea034b312ed655e191d842ea3e1db7ac13f2399c65d0
+         answer YES
+ok      D.finalize               STRANGER   finalize        MAJORITY_AGREE  0xc6efdede3494a50493b0eccc59be486aa1105688c20d06b13bde192825f70300
+ok      D.collect-YES_TRADER     YES_TRADER collect         MAJORITY_AGREE  0x1f0b60bf5f73d81c406d13d5c05ebbc8b421b8a342d78b5f6ee94849d1677f2c
+ok      D.collect-NO_TRADER      NO_TRADER  collect         MAJORITY_AGREE  0x98a6912217a4f0bc47623e36156a8b5b26c0cb5116f3c640e7fd741f88c330be
+refused D.collect-twice          NO_TRADER  collect         MAJORITY_AGREE  0xabcd58b79d8c34eb4406078191dd3db292379cfb5bda0614783336e67df8b648
+         [EXPECTED] this position has already been collected
+ok      D.draw.YES_TRADER        YES_TRADER claim           MAJORITY_AGREE  0x0704fda2c31eb74b97573ad9fc4c0f100609aed13118a179680f63bb1cad601e
 
 checks passed:
   the deployment runs this rule set
@@ -162,6 +177,27 @@ checks passed:
   NO_TRADER's ledger is empty after drawing
   claim-nothing should have been refused
   claim-nothing refusal should say "nothing is owed", said "[EXPECTED] nothing is owed to this address"
+  D.create failed: {"market_id": "mk-0004", "criteria_digest": "2b8ce451830c50abb7c4acbd25975af10c83e29a185ffc297302a9043dd049e5", "replay": true}
+  D: the market froze its criteria and named its sources from the registry
+  D.stake-yes failed: {"refused": false, "market_id": "mk-0004", "side": "YES", "yes_pool_wei": "100000000000000000", "no_pool_wei": "0"}
+  D: a stake on yes is recorded against its owner
+  D.stake-no failed: {"refused": false, "market_id": "mk-0004", "side": "NO", "yes_pool_wei": "100000000000000000", "no_pool_wei": "200000000000000000"}
+  D: a stake on no is recorded against its owner
+  D.record-1 failed: {"market_id": "mk-0004", "source": 1, "of": 2, "readable": true}
+  D.record-2 failed: {"market_id": "mk-0004", "source": 2, "of": 2, "readable": false, "evidence_ends": "2026-10-20T17:17:36Z"}
+  D: every named source is in the record, each with the digest of its text
+  D.resolve failed: {"market_id": "mk-0004", "verdict": "YES", "appeal_ends": "2026-10-20T17:28:01Z"}
+  D.finalize failed: {"market_id": "mk-0004", "verdict": "YES"}
+  D: YES_TRADER is owed exactly the parimutuel share of the answer
+  D: NO_TRADER is owed exactly the parimutuel share of the answer
+  D: on yes, the only yes staker is owed both pools
+  D.collect-YES_TRADER failed: {"market_id": "mk-0004", "collected_wei": "300000000000000000"}
+  D: YES_TRADER collects exactly what the position view said it was owed
+  D.collect-NO_TRADER failed: {"market_id": "mk-0004", "collected_wei": "0"}
+  D: NO_TRADER collects exactly what the position view said it was owed
+  D.collect-twice should have been refused
+  D.collect-twice refusal should say "already been collected", said "[EXPECTED] this position has already been collected"
+  D.draw.YES_TRADER failed: {"claimed_wei": "300000000000000000"}
 
 observed (not asserted):
   B: source 1 was read
@@ -178,3 +214,6 @@ observed (not asserted):
   A: source 3 was read
   A: the validators answered YES
   A: the appeal answered NO (CHANGED)
+  D: source 1 was read
+  D: source 2 was agreed to be unreadable
+  D: the validators answered YES

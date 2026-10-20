@@ -13,6 +13,8 @@
  *      48 feet in its 2026 drought. Answered, finalized, collected.
  *   C  Europe, port strike: Germany's 48-hour seaport strike from 2 September.
  *      One named source refuses plain fetches and is recorded as unreadable.
+ *   D  Europe, port strike: the 24-hour warning strike across six German
+ *      seaports in August, reported while it was under way.
  *   plus refusals at every boundary, and both sides draw what they are owed.
  *
  * These are replay markets: their windows ended before they opened, so the
@@ -188,6 +190,17 @@ const SPECS = {
       "https://www.hapag-lloyd.com/pt/services-information/offices-localinfo/local-news/2026/08/germany--24-hour-warning-strike-at-german-seaports-may-affect-op.html",
     ],
   },
+  D: {
+    question: "Did port workers at German seaports, including Hamburg, strike for at least 24 hours in August 2026?",
+    event_type: "PORT", place: "German North Sea ports", lat: "53.54", lon: "8.58",
+    yes_when: "Port workers at German seaports including Hamburg took part in a strike called for at least 24 hours, which began between 15 and 25 August 2026, as reported while it was under way or after it took place.",
+    exclusions: "Strikes that were only threatened or announced and then called off do not count.",
+    window_start: "2026-08-15", window_end: "2026-08-25",
+    sources: [
+      "https://container-news.com/thousands-join-warning-strike-across-six-german-seaports/",
+      "https://www.hapag-lloyd.com/pt/services-information/offices-localinfo/local-news/2026/08/germany--24-hour-warning-strike-at-german-seaports-may-affect-op.html",
+    ],
+  },
 };
 
 async function open(key) {
@@ -204,7 +217,7 @@ async function open(key) {
   const mid = run.ids[key];
   await once(`${key}: the market froze its criteria and named its sources from the registry`, async () => {
     const m = await market(mid);
-    return m.state === "OPEN" && m.criteria_digest.length === 64 && m.sources.length === 3 && m.replay === true;
+    return m.state === "OPEN" && m.criteria_digest.length === 64 && m.sources.length === SPECS[key].sources.length && m.replay === true;
   });
   return mid;
 }
@@ -219,7 +232,8 @@ async function stakeBoth(key, mid) {
 async function record(key, mid) {
   const m0 = await market(mid);
   await after(m0.resolve_after, `${key}'s resolution time`);
-  for (let i = 1; i <= 3; i++) {
+  const n = m0.sources.length;
+  for (let i = 1; i <= n; i++) {
     if (!run.steps[`${key}.record-${i}`] && (await market(mid)).page_keys.length >= i) {
       observe(`${key}: source ${i} was already recorded by an earlier call`);
       continue;
@@ -229,7 +243,7 @@ async function record(key, mid) {
   }
   const m = await market(mid);
   await once(`${key}: every named source is in the record, each with the digest of its text`, async () =>
-    m.state === "RECORDED" && m.pages.length === 3 && m.pages.every((p) => (p.text ? p.sha256.length === 64 : p.sha256 === "")));
+    m.state === "RECORDED" && m.pages.length === n && m.pages.every((p) => (p.text ? p.sha256.length === 64 : p.sha256 === "")));
   return m;
 }
 
@@ -281,8 +295,7 @@ async function proveA() {
   await step("A.resolve-too-early", "STRANGER", "resolve", [mid], { refused: "evidence period has not ended" });
   const verdict = await resolve("A", mid);
   const m = await market(mid);
-  assert(m.rounds.length === 1 && m.rounds[0].record.length === 4 && m.rounds[0].criteria_digest === m.criteria_digest,
-    "A: the answer records every page it judged by digest, beside the criteria digest");
+  await once("A: the answer records every page it judged by digest, beside the criteria digest", async () => m.rounds[0].kind === "RESOLUTION" && m.rounds[0].record.length === 4 && m.rounds[0].criteria_digest === m.criteria_digest);
   const appellant = verdict === "YES" ? "NO_TRADER" : "YES_TRADER";
   const winner = verdict === "YES" ? "YES_TRADER" : verdict === "NO" ? "NO_TRADER" : null;
   if (winner) {
@@ -306,9 +319,11 @@ async function proveA() {
   assert(mf.state === "FINAL" && mf.rounds.length === 2 && mf.settled_how === "APPEAL", "A: the appeal's answer is final");
   assert(mf.appeal.result === (d.returned.verdict === mf.appeal.from ? "HELD" : "CHANGED"), "A: the bond went where the rule says");
   for (const role of ["YES_TRADER", "NO_TRADER"]) {
-    const p = await position(mid, role);
-    const mine = role === "YES_TRADER" ? BigInt(p.yes_wei) : BigInt(p.no_wei);
-    assert(BigInt(p.owed_wei) === share(mf, role === "YES_TRADER" ? "YES" : "NO", mine), `A: ${role} is owed exactly the parimutuel share of the final answer`);
+    await once(`A: ${role} is owed exactly the parimutuel share of the final answer`, async () => {
+      const p = await position(mid, role);
+      const mine = role === "YES_TRADER" ? BigInt(p.yes_wei) : BigInt(p.no_wei);
+      return BigInt(p.owed_wei) === share(mf, role === "YES_TRADER" ? "YES" : "NO", mine);
+    });
   }
   await collectAll("A", mid);
 }
@@ -350,6 +365,38 @@ async function proveC() {
   await collectAll("C", mid);
 }
 
+// ── D: a strike that happened, reported while under way ─────────────────────
+
+async function proveD() {
+  const mid = await open("D");
+  await stakeBoth("D", mid);
+  const m0 = await market(mid);
+  await after(m0.trading_closes, "D's trading close");
+  await record("D", mid);
+  const verdict = await resolve("D", mid);
+  const r = await market(mid);
+  await after(r.appeal_ends, "D's appeal window");
+  await step("D.finalize", "STRANGER", "finalize", [mid]);
+  const mf = await market(mid);
+  for (const role of ["YES_TRADER", "NO_TRADER"]) {
+    await once(`D: ${role} is owed exactly the parimutuel share of the answer`, async () => {
+      const p = await position(mid, role);
+      const mine = role === "YES_TRADER" ? BigInt(p.yes_wei) : BigInt(p.no_wei);
+      return BigInt(p.owed_wei) === share(mf, role === "YES_TRADER" ? "YES" : "NO", mine);
+    });
+  }
+  if (verdict === "YES") {
+    await once("D: on yes, the only yes staker is owed both pools", async () =>
+      BigInt((await position(mid, "YES_TRADER")).owed_wei) === BigInt(mf.yes_pool_wei) + BigInt(mf.no_pool_wei));
+  }
+  await collectAll("D", mid);
+  for (const role of ["YES_TRADER", "NO_TRADER"]) {
+    const key = `D.draw.${role}`;
+    if (run.steps[key] || (await owed(role)) === 0n) continue;
+    await step(key, role, "claim", [], { transfer: true });
+  }
+}
+
 async function draw(role) {
   const key = `draw.${role}`;
   if (run.steps[key]) return say(`${key}: done earlier`);
@@ -358,6 +405,7 @@ async function draw(role) {
   assert((await owed(role)) === 0n, `${role}'s ledger is empty after drawing`);
 }
 
+delete run.finished_at;
 const cfg = await readJson("get_config", []);
 assert(cfg.ruleset === "portcast-rules-1", "the deployment runs this rule set");
 // The three markets run side by side: open all, then walk each through.
@@ -369,6 +417,7 @@ await proveA();
 await draw("YES_TRADER");
 await draw("NO_TRADER");
 await step("claim-nothing", "STRANGER", "claim", [], { refused: "nothing is owed" });
+await proveD();
 const writes = new Set(Object.values(run.steps).map((s) => s.fn));
 say(`writes reached: ${[...writes].sort().join(", ")} (${writes.size})`);
 run.checks = run.passed.length;
