@@ -107,7 +107,15 @@ A market whose window has already ended when it opens is marked as a replay. It 
 
 ## Verified end-to-end
 
-See [`docs/live-proof.md`](docs/live-proof.md): three markets on real reporting, from Asia (Typhoon Saudel at Ningbo-Zhoushan), Central America (the Panama Canal's draft limit) and Europe (Germany's seaport strike), run on the deployment of record with every write the contract has.
+See [`docs/live-proof.md`](docs/live-proof.md): three markets on real reporting, run on the deployment of record, 88 checks across 46 transactions, every round agreed at the first ask:
+
+| Market | Answer |
+|---|---|
+| Ningbo-Zhoushan, Typhoon Saudel (Asia) | YES, then NO on appeal: the pages give a 78-hour total, not one continuous 72-hour closure; the appeal changed the answer and its bond came back |
+| Panama Canal draft (Central America) | NO: the cut to 47.5 feet was postponed outside the window |
+| Hamburg seaport strike (Europe) | NO: one source refused plain fetches and was agreed unreadable |
+
+Ten of the twelve writes ran live; `lapse_appeal` and `void_market` wait on long stops (up to 14 days) and are covered by the direct tests.
 
 ## Tech stack
 

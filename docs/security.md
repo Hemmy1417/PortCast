@@ -31,7 +31,7 @@ What was checked before the deployment of record, what the live network taught u
 ## Limits that remain
 
 - The registry decides who counts as a publisher; a registry publisher can still be wrong, late, or change a page before it is recorded. The record captures the page as it was when read.
-- Pages are read over plain HTTP. A publisher that serves its text only through scripts, or refuses plain fetches, is recorded as unreadable.
+- Pages are read over plain HTTP from the validators' own network. A publisher that serves its text only through scripts, or refuses requests from that network, is recorded as unreadable: in the live run two pages that load from an ordinary connection (teleSUR English, Nautilus Shipping) were agreed unreadable by the validators.
 - Only the first 8,000 characters of a page's visible text are kept; an article buried below a long header may be cut.
 - Validators agree on the answer only; the reasons and the per-page notes are the leading validator's words.
 - Rounding in the parimutuel split leaves at most a few wei per market in the contract.

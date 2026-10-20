@@ -1,0 +1,180 @@
+PortCast live proof on GenLayer Studio Next (chain 61997)
+contract 0xA115DbeA84FaA56527e93923670b79933065d4cE
+finished 2026-10-20T14:55:13.739Z: 88 checks, 46 transactions, 0 rounds without agreement asked again
+
+ok      A.create                 CREATOR    create_market   MAJORITY_AGREE  0xfaf0ce1813c4b1fcf723059daae8995d3c3678f264df894ddf91c3a7d2e77b21
+ok      B.create                 CREATOR    create_market   MAJORITY_AGREE  0xf58d81fa930c2b8b10a953cf2326533defb185e9e87d66fbcef687a1da07f9d6
+ok      C.create                 CREATOR    create_market   MAJORITY_AGREE  0xc098f3cf796dd6ae1296e0139ddc4bfe3448c8be39a04021e1504cd74b45d875
+ok      A.stake-yes              YES_TRADER stake           MAJORITY_AGREE  0xc5cd903ed44cbc5e8d0166426566e54348b1ecfc2d3de442dac0b6a4a0857531
+ok      A.stake-no               NO_TRADER  stake           MAJORITY_AGREE  0xea5d5428c007b49f32bff829be99096e52b67e48448bee7ff30945cd71aa21ec
+ok      B.stake-yes              YES_TRADER stake           MAJORITY_AGREE  0x4d8f10a6081deb1965f7bf69a54a6671b46dcd7990bf002ac1bfec0004a2d3d2
+ok      B.stake-no               NO_TRADER  stake           MAJORITY_AGREE  0xa0bc9917637e9bc3812ac436a7b2cf2d1a429b68ee598ae62f28578bbeed5e9f
+ok      C.stake-yes              YES_TRADER stake           MAJORITY_AGREE  0x724fee2711275c45a807c64cae88492a99dac4e06cd12d363e119e3fe8bfccc4
+ok      C.stake-no               NO_TRADER  stake           MAJORITY_AGREE  0xb09cd7b2657f62c07136f7c1b654faff68d32d7f2cb47a7a49210f07fc7c37e1
+ok      B.record-1               STRANGER   record_sources  MAJORITY_AGREE  0x3a2cf580837117af8e881faab04387f6e99cbb3ad3cfafff0c1a2aa98e32e91c
+         source 1 of 3: read
+ok      B.record-2               STRANGER   record_sources  MAJORITY_AGREE  0xeb9594c449fb5b64d16f286b654b626b37c6aa9e7019bc129dbbe88df510519e
+         source 2 of 3: unreadable
+ok      B.record-3               STRANGER   record_sources  MAJORITY_AGREE  0x97c2fb060e57d6712979277bd87bfa01dcdb9ebf543ce3a8789022ceebc2d9ed
+         source 3 of 3: unreadable
+ok      B.resolve                STRANGER   resolve         MAJORITY_AGREE  0x7758e75dcb831628e21057793ca851fa57adfb0e6cf468d3d3cf960c9d59c545
+         answer NO
+refused B.finalize-too-early     STRANGER   finalize        MAJORITY_AGREE  0xc94d6c772b49941016c8fa283769678f0b6d9bedfb6bec890b8e11ba5774ed44
+         [EXPECTED] the appeal window is still open
+ok      B.appeal-late            YES_TRADER appeal          MAJORITY_AGREE  0x18b90f652d5cd1c1b25f645dffa48552f3c1c16aeab5d11ea95440e86a6d8a01
+         returned a refusal: the appeal window has closed; any value sent is claimable back
+ok      B.finalize               STRANGER   finalize        MAJORITY_AGREE  0x08324ff3c06e59399a2f2de441bb0a095ff434e03941a8bbe878d606c8bce6f9
+ok      B.collect-YES_TRADER     YES_TRADER collect         MAJORITY_AGREE  0x53709dca714015c5afe811892ddccf83ad4e877d8498f2f8afbd0551c5398308
+ok      B.collect-NO_TRADER      NO_TRADER  collect         MAJORITY_AGREE  0xfe0a4b47038b8a283eedb49d84e75d28618b7f99bdb2e7c672c20fa3c34f5dc9
+refused B.collect-twice          NO_TRADER  collect         MAJORITY_AGREE  0xad675e8d82fe2255781913b92a6abbbf3c1631c5b9d461012b5ae0c68cb33f2b
+         [EXPECTED] this position has already been collected
+ok      C.stake-late             YES_TRADER stake           MAJORITY_AGREE  0xa5a86ebc64769ace17b544ee862421c4bf49ee0b52afbd7d21d253af6d5947ed
+         returned a refusal: trading on this market has closed; any value sent is claimable back
+ok      C.record-1               STRANGER   record_sources  MAJORITY_AGREE  0x208d027ae9b1bf5bbd02e9c49397fa6bbdba3e1e028c57946408b257a7a12e1f
+         source 1 of 3: read
+ok      C.record-2               STRANGER   record_sources  MAJORITY_AGREE  0x0c86181e7a18973359f700b12884aeac85ca6a7476c30efc5e36e28781a77934
+         source 2 of 3: read
+ok      C.record-3               STRANGER   record_sources  MAJORITY_AGREE  0x4f7b0992fccf64b7f278cd600e9d2938c778e367f0072c5e51b0539b1c3e8868
+         source 3 of 3: unreadable
+ok      C.resolve                STRANGER   resolve         MAJORITY_AGREE  0x81c7c0e205a61e1bc35e39a1136a89d4125b90c59c40f2c68953817c753340fe
+         answer NO
+ok      C.finalize               STRANGER   finalize        MAJORITY_AGREE  0x9830d958624fae83f54f55ccb8f5f1fbb676f1f703f89882f3df10aebe76a2d2
+ok      C.collect-YES_TRADER     YES_TRADER collect         MAJORITY_AGREE  0x824da7854c9da1abdb04dc1cdcada2ee7379980793aea1982a04ecd9e0204d81
+ok      C.collect-NO_TRADER      NO_TRADER  collect         MAJORITY_AGREE  0x4575dfa21d23697f9c632deacb6aea456d0e1355ed1c2ac440ee13fd9feb2ac1
+refused C.collect-twice          NO_TRADER  collect         MAJORITY_AGREE  0x52fc5b946120501294e5d090938f4ba3204defba786685441482994b20b22ea1
+         [EXPECTED] this position has already been collected
+ok      A.stake-bad-side         YES_TRADER stake           MAJORITY_AGREE  0x1c7315bf12f2cc297de87e771e8a74c41ddcfd003a3e3e59fb93a9ca6afa53ae
+         returned a refusal: trading on this market has closed; any value sent is claimable back
+ok      A.record-2               STRANGER   record_sources  MAJORITY_AGREE  0x4c5919ac05fba1815d77019e6c6236d9681b08a17c3629bd63b9d16a37bceeed
+         source 2 of 3: read
+ok      A.record-3               STRANGER   record_sources  MAJORITY_AGREE  0x3863284c5cd7569497502db7f2aa03d5663a9957ecb4e4f497f77cf2d44fbb14
+         source 3 of 3: read
+refused A.file-stranger          STRANGER   file_page       MAJORITY_AGREE  0x3a345685e59014fb1bccf8dc35f4d30b6096647cc9ea712aa31bdb941b1ee8a7
+         [EXPECTED] only someone holding a stake in this market may file a page
+refused A.file-unlisted          NO_TRADER  file_page       MAJORITY_AGREE  0xa5e28a765382da5ce3d4680209ee6a554c124f0eafe9c1f9b8c6d55e5d98f9ae
+         [EXPECTED] example.com is not in the registry of publishers a market may name
+ok      A.file                   NO_TRADER  file_page       MAJORITY_AGREE  0x97cfd70cc5bae866e541778a146509796dd9b82c22ddb38a485994cb5edb9d25
+refused A.resolve-too-early      STRANGER   resolve         MAJORITY_AGREE  0x041162eea6d0fabc06bf151ad5974bb35b73a7b6f6368dbabd399fe685e0e0c7
+         [EXPECTED] the evidence period has not ended; stakers may still file pages
+ok      A.resolve                STRANGER   resolve         MAJORITY_AGREE  0x664b5e2b32ff161fe5283db7d069afdba984be51e046e6857f11cf97fba3316e
+         answer YES
+ok      A.appeal-by-winner       YES_TRADER appeal          MAJORITY_AGREE  0xf42115ca266422c3bcbc8c6d5787b56bb45af337946e0910884ef4e0450ab74c
+         returned a refusal: only a staker the answer did not pay may appeal; any value sent is claimable back
+ok      A.appeal                 NO_TRADER  appeal          MAJORITY_AGREE  0xdb35bb47676acbd74fb97e38721b41050e680120ee36e3987c6f2597135d9fdb
+ok      A.file-appeal            NO_TRADER  file_page       MAJORITY_AGREE  0xf4010bda78ec2dc453fbb7c21f0783f2183a6fcb01cad8b592a8f7b5a08d4b31
+ok      A.decide-appeal          STRANGER   decide_appeal   MAJORITY_AGREE  0x66c77e3983f389dc0791306df3871310f3b90dc916329f5e00934704ab81cb8f
+         answer NO, appeal CHANGED
+ok      A.collect-YES_TRADER     YES_TRADER collect         MAJORITY_AGREE  0x01fc331fd18d323ac34dcec0bdcb1218f7f05712494bd9217bf1c5f4dd180881
+ok      A.collect-NO_TRADER      NO_TRADER  collect         MAJORITY_AGREE  0x3042e79decfcb80080d9ebb0009486b1253cfb82772a8adfff2b3d4adcda5008
+refused A.collect-twice          NO_TRADER  collect         MAJORITY_AGREE  0x543a27e6beb97471fe4c61ce7d40658947bad5167bb9567c835ed0f855fd5214
+         [EXPECTED] this position has already been collected
+ok      draw.YES_TRADER          YES_TRADER claim           MAJORITY_AGREE  0x5b7d7380428bc3fdbc2caf413904e2a75ff3abc54ab917a4e3aa76b9ae1264a3
+ok      draw.NO_TRADER           NO_TRADER  claim           MAJORITY_AGREE  0xcbb6e36e7a76216acf0f299ec808b71e14cef213d265f801eb23052d2df93685
+refused claim-nothing            STRANGER   claim           MAJORITY_AGREE  0x13ec139999153dace23f0d52e80091210b71386bd98a3959889372e9e9a84f0b
+         [EXPECTED] nothing is owed to this address
+
+checks passed:
+  the deployment runs this rule set
+  A.create failed: {"market_id": "mk-0001", "criteria_digest": "6817545c3ee0680e682778358f594b4583cf83166e6dc075b4a4ffa10af99729", "replay": true}
+  A: the market froze its criteria and named its sources from the registry
+  B.create failed: {"market_id": "mk-0002", "criteria_digest": "51837411a1b67048bff4e2cf8ed15e72af82bc5bd1e11cdafc04df7065abcefd", "replay": true}
+  B: the market froze its criteria and named its sources from the registry
+  C.create failed: {"market_id": "mk-0003", "criteria_digest": "b6e0188dc075853d122ba00ed26a67e1a1f8d2e7d8a2bad234724f5ea88a4476", "replay": true}
+  C: the market froze its criteria and named its sources from the registry
+  A.stake-yes failed: {"refused": false, "market_id": "mk-0001", "side": "YES", "yes_pool_wei": "100000000000000000", "no_pool_wei": "0"}
+  A: a stake on yes is recorded against its owner
+  A.stake-no failed: {"refused": false, "market_id": "mk-0001", "side": "NO", "yes_pool_wei": "100000000000000000", "no_pool_wei": "200000000000000000"}
+  A: a stake on no is recorded against its owner
+  B.stake-yes failed: {"refused": false, "market_id": "mk-0002", "side": "YES", "yes_pool_wei": "100000000000000000", "no_pool_wei": "0"}
+  B: a stake on yes is recorded against its owner
+  B.stake-no failed: {"refused": false, "market_id": "mk-0002", "side": "NO", "yes_pool_wei": "100000000000000000", "no_pool_wei": "200000000000000000"}
+  B: a stake on no is recorded against its owner
+  C.stake-yes failed: {"refused": false, "market_id": "mk-0003", "side": "YES", "yes_pool_wei": "100000000000000000", "no_pool_wei": "0"}
+  C: a stake on yes is recorded against its owner
+  C.stake-no failed: {"refused": false, "market_id": "mk-0003", "side": "NO", "yes_pool_wei": "100000000000000000", "no_pool_wei": "200000000000000000"}
+  C: a stake on no is recorded against its owner
+  B.record-1 failed: {"market_id": "mk-0002", "source": 1, "of": 3, "readable": true}
+  B.record-2 failed: {"market_id": "mk-0002", "source": 2, "of": 3, "readable": false}
+  B.record-3 failed: {"market_id": "mk-0002", "source": 3, "of": 3, "readable": false, "evidence_ends": "2026-10-20T13:43:08Z"}
+  B: every named source is in the record, each with the digest of its text
+  B.resolve failed: {"market_id": "mk-0002", "verdict": "NO", "appeal_ends": "2026-10-20T13:53:32Z"}
+  B.finalize-too-early should have been refused
+  B.finalize-too-early refusal should say "appeal window is still open", said "[EXPECTED] the appeal window is still open"
+  B.appeal-late failed: {"refused": true, "reason": "the appeal window has closed; any value sent is claimable back"}
+  B: an appeal after its window is refused and the bond credited back
+  B.finalize failed: {"market_id": "mk-0002", "verdict": "NO"}
+  B: an answer nobody appealed becomes final after its window
+  B.collect-YES_TRADER failed: {"market_id": "mk-0002", "collected_wei": "0"}
+  B: YES_TRADER collects exactly what the position view said it was owed
+  B.collect-NO_TRADER failed: {"market_id": "mk-0002", "collected_wei": "300000000000000000"}
+  B: NO_TRADER collects exactly what the position view said it was owed
+  B.collect-twice should have been refused
+  B.collect-twice refusal should say "already been collected", said "[EXPECTED] this position has already been collected"
+  C.stake-late failed: {"refused": true, "reason": "trading on this market has closed; any value sent is claimable back"}
+  C: a stake after trading closes is refused and its value credited back
+  C.record-1 failed: {"market_id": "mk-0003", "source": 1, "of": 3, "readable": true}
+  C.record-2 failed: {"market_id": "mk-0003", "source": 2, "of": 3, "readable": true}
+  C.record-3 failed: {"market_id": "mk-0003", "source": 3, "of": 3, "readable": false, "evidence_ends": "2026-10-20T14:09:41Z"}
+  C: every named source is in the record, each with the digest of its text
+  C.resolve failed: {"market_id": "mk-0003", "verdict": "NO", "appeal_ends": "2026-10-20T14:20:04Z"}
+  C.finalize failed: {"market_id": "mk-0003", "verdict": "NO"}
+  C.collect-YES_TRADER failed: {"market_id": "mk-0003", "collected_wei": "0"}
+  C: YES_TRADER collects exactly what the position view said it was owed
+  C.collect-NO_TRADER failed: {"market_id": "mk-0003", "collected_wei": "300000000000000000"}
+  C: NO_TRADER collects exactly what the position view said it was owed
+  C.collect-twice should have been refused
+  C.collect-twice refusal should say "already been collected", said "[EXPECTED] this position has already been collected"
+  A.stake-bad-side failed: {"refused": true, "reason": "trading on this market has closed; any value sent is claimable back"}
+  A: a malformed stake is refused by returning, and its value credited back
+  A.record-2 failed: {"market_id": "mk-0001", "source": 2, "of": 3, "readable": true}
+  A.record-3 failed: {"market_id": "mk-0001", "source": 3, "of": 3, "readable": true, "evidence_ends": "2026-10-20T14:37:11Z"}
+  A: every named source is in the record, each with the digest of its text
+  A.file-stranger should have been refused
+  A.file-stranger refusal should say "holding a stake", said "[EXPECTED] only someone holding a stake in this market may file a page"
+  A.file-unlisted should have been refused
+  A.file-unlisted refusal should say "not in the registry", said "[EXPECTED] example.com is not in the registry of publishers a market may name"
+  A.file failed: {"market_id": "mk-0001", "page": "mk-0001|4", "chars": 8000}
+  A: the filed page joined the record as the validators read it
+  A.resolve-too-early should have been refused
+  A.resolve-too-early refusal should say "evidence period has not ended", said "[EXPECTED] the evidence period has not ended; stakers may still file pages"
+  A.resolve failed: {"market_id": "mk-0001", "verdict": "YES", "appeal_ends": "2026-10-20T14:47:37Z"}
+  A: the answer records every page it judged by digest, beside the criteria digest
+  A.appeal-by-winner failed: {"refused": true, "reason": "only a staker the answer did not pay may appeal; any value sent is claimable back"}
+  A: a staker the answer paid cannot appeal
+  A.appeal failed: {"refused": false, "market_id": "mk-0001", "evidence_ends": "2026-10-20T14:49:15Z"}
+  A: a staker the answer did not pay appeals with the bond
+  A.file-appeal failed: {"market_id": "mk-0001", "page": "mk-0001|5", "chars": 8000}
+  A: a page filed during the appeal joins the record for the appeal only
+  A.decide-appeal failed: {"market_id": "mk-0001", "verdict": "NO", "appeal": "CHANGED"}
+  A: the appeal's answer is final
+  A: the bond went where the rule says
+  A: YES_TRADER is owed exactly the parimutuel share of the final answer
+  A: NO_TRADER is owed exactly the parimutuel share of the final answer
+  A.collect-YES_TRADER failed: {"market_id": "mk-0001", "collected_wei": "0"}
+  A: YES_TRADER collects exactly what the position view said it was owed
+  A.collect-NO_TRADER failed: {"market_id": "mk-0001", "collected_wei": "300000000000000000"}
+  A: NO_TRADER collects exactly what the position view said it was owed
+  A.collect-twice should have been refused
+  A.collect-twice refusal should say "already been collected", said "[EXPECTED] this position has already been collected"
+  draw.YES_TRADER failed: {"claimed_wei": "300000000000000000"}
+  YES_TRADER's ledger is empty after drawing
+  draw.NO_TRADER failed: {"claimed_wei": "950000000000000000"}
+  NO_TRADER's ledger is empty after drawing
+  claim-nothing should have been refused
+  claim-nothing refusal should say "nothing is owed", said "[EXPECTED] nothing is owed to this address"
+
+observed (not asserted):
+  B: source 1 was read
+  B: source 2 was agreed to be unreadable
+  B: source 3 was agreed to be unreadable
+  B: the validators answered NO
+  C: source 1 was read
+  C: source 2 was read
+  C: source 3 was agreed to be unreadable
+  C: 1 of 3 sources were agreed to be unreadable
+  C: the validators answered NO
+  A: source 1 was already recorded by an earlier call
+  A: source 2 was read
+  A: source 3 was read
+  A: the validators answered YES
+  A: the appeal answered NO (CHANGED)

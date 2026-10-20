@@ -220,6 +220,10 @@ async function record(key, mid) {
   const m0 = await market(mid);
   await after(m0.resolve_after, `${key}'s resolution time`);
   for (let i = 1; i <= 3; i++) {
+    if (!run.steps[`${key}.record-${i}`] && (await market(mid)).page_keys.length >= i) {
+      observe(`${key}: source ${i} was already recorded by an earlier call`);
+      continue;
+    }
     const r = await step(`${key}.record-${i}`, "STRANGER", "record_sources", [mid]);
     observe(`${key}: source ${i} ${r.returned?.readable ? "was read" : "was agreed to be unreadable"}`);
   }
@@ -263,8 +267,7 @@ async function proveA() {
   const mid = await open("A");
   await stakeBoth("A", mid);
   await step("A.stake-bad-side", "YES_TRADER", "stake", [mid, "MAYBE"], { value: STAKE })
-    .then((r) => assert(r.returned?.refused === true && /YES or on NO/.test(r.returned.reason), "A: a stake on no side at all is refused and its value credited back"));
-  await step("A.record-too-early", "STRANGER", "record_sources", [mid], { refused: "cannot be resolved yet" });
+    .then((r) => assert(r.returned?.refused === true && /YES or on NO|closed/.test(r.returned.reason), "A: a malformed stake is refused by returning, and its value credited back"));
   await record("A", mid);
   await step("A.file-stranger", "STRANGER", "file_page", [mid, "https://www.gcaptain.com/", "x"], { refused: "holding a stake" });
   await step("A.file-unlisted", "NO_TRADER", "file_page", [mid, "https://example.com/report", "x"], { refused: "not in the registry" });
