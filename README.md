@@ -45,12 +45,19 @@ If nobody staked on the winning side, every stake is refunded. An appeal's bond 
 
 ## Lifecycle
 
-```text
-OPEN --record_sources (once per source)--> RECORDED --resolve--> RESOLVED --appeal--> APPEALED
-  |                                            |                    |                    |
-void_market (record long stop)        void_market (long stop)   finalize        decide_appeal / lapse_appeal
-  v                                            v                    v                    v
- VOID                                        VOID                 FINAL                FINAL
+```mermaid
+stateDiagram-v2
+    direction LR
+    [*] --> Open: create_market
+    Open --> Recorded: record_sources, once per source
+    Open --> Void: void_market, after the record long stop
+    Recorded --> Resolved: resolve, after the evidence period
+    Recorded --> Void: void_market, after the long stop
+    Resolved --> Final: finalize, after the appeal window
+    Resolved --> Appealed: appeal, with the bond
+    Appealed --> Final: decide_appeal or lapse_appeal
+    Final --> [*]: collect, then claim
+    Void --> [*]: collect, then claim
 ```
 
 | State | Leaves by |
