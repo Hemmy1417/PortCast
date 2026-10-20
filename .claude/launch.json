@@ -1,0 +1,15 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "portcast",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": [
+        "--dir",
+        "C:/Users/Pc/Desktop/PortCast/web",
+        "dev"
+      ],
+      "port": 3159
+    }
+  ]
+}

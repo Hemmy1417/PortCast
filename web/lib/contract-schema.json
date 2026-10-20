@@ -1,0 +1,117 @@
+{
+  "address": "0xA115DbeA84FaA56527e93923670b79933065d4cE",
+  "writes": {
+    "appeal": {
+      "params": [
+        "mid",
+        "statement"
+      ],
+      "types": [
+        "string",
+        "string"
+      ],
+      "payable": true
+    },
+    "claim": {
+      "params": [],
+      "types": [],
+      "payable": false
+    },
+    "collect": {
+      "params": [
+        "mid"
+      ],
+      "types": [
+        "string"
+      ],
+      "payable": false
+    },
+    "create_market": {
+      "params": [
+        "market_json"
+      ],
+      "types": [
+        "string"
+      ],
+      "payable": false
+    },
+    "decide_appeal": {
+      "params": [
+        "mid"
+      ],
+      "types": [
+        "string"
+      ],
+      "payable": false
+    },
+    "file_page": {
+      "params": [
+        "mid",
+        "url",
+        "note"
+      ],
+      "types": [
+        "string",
+        "string",
+        "string"
+      ],
+      "payable": false
+    },
+    "finalize": {
+      "params": [
+        "mid"
+      ],
+      "types": [
+        "string"
+      ],
+      "payable": false
+    },
+    "lapse_appeal": {
+      "params": [
+        "mid"
+      ],
+      "types": [
+        "string"
+      ],
+      "payable": false
+    },
+    "record_sources": {
+      "params": [
+        "mid"
+      ],
+      "types": [
+        "string"
+      ],
+      "payable": false
+    },
+    "resolve": {
+      "params": [
+        "mid"
+      ],
+      "types": [
+        "string"
+      ],
+      "payable": false
+    },
+    "stake": {
+      "params": [
+        "mid",
+        "side"
+      ],
+      "types": [
+        "string",
+        "string"
+      ],
+      "payable": true
+    },
+    "void_market": {
+      "params": [
+        "mid"
+      ],
+      "types": [
+        "string"
+      ],
+      "payable": false
+    }
+  }
+}

@@ -1,0 +1,13 @@
+__pycache__/
+.pytest_cache/
+artifacts/
+.data/
+node_modules/
+.next/
+*.log
+.env
+.env.local
+audit/
+probes/out/
+web/CLAUDE.md
+web/AGENTS.md
