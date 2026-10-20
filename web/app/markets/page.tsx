@@ -11,6 +11,7 @@ import { eventType, plural } from "@/lib/present";
 import { listMarkets } from "@/lib/read";
 import type { EventType } from "@/lib/types";
 import { useChain } from "@/lib/useChain";
+import { useNow } from "@/lib/useNow";
 
 const TYPES: EventType[] = ["PORT", "CANAL", "WEATHER", "ROUTE", "CONGESTION", "FREIGHT"];
 const STAGES = [
@@ -26,6 +27,7 @@ export default function Markets() {
   const [q, setQ] = useState("");
   const [hover, setHover] = useState<string | null>(null);
   const router = useRouter();
+  const now = useNow();
 
   const items = useMemo(() => (markets.data?.items ?? []).filter((m) =>
     (!type || m.event_type === type)
@@ -64,7 +66,7 @@ export default function Markets() {
           {markets.loading ? <div className="bg-deck p-4"><Loading what="the markets" /></div> : null}
           {markets.error ? <Problem title="The markets could not be read">{String((markets.error as Error).message)}</Problem> : null}
           {markets.data && !items.length ? <p className="bg-deck p-4 text-steel">No market matches.</p> : null}
-          {items.map((m) => <MarketRow key={m.market_id} m={m} active={hover === m.market_id} onHover={setHover} />)}
+          {items.map((m) => <MarketRow key={m.market_id} m={m} active={hover === m.market_id} onHover={setHover} nowMs={now} />)}
         </div>
       </div>
     </div>

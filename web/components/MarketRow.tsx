@@ -11,7 +11,7 @@ export function stateTone(s: string): "signal" | "hull" | "rule" | "sea" {
   return s === "OPEN" ? "signal" : s === "FINAL" ? "hull" : s === "VOID" ? "rule" : "sea";
 }
 
-export function MarketRow({ m, active, onHover }: { m: MarketSummary; active?: boolean; onHover?: (mid: string | null) => void }) {
+export function MarketRow({ m, active, onHover, nowMs }: { m: MarketSummary; active?: boolean; onHover?: (mid: string | null) => void; nowMs: number }) {
   const yes = BigInt(m.yes_pool_wei);
   const no = BigInt(m.no_pool_wei);
   const chance = yesChance(yes, no);
@@ -31,7 +31,7 @@ export function MarketRow({ m, active, onHover }: { m: MarketSummary; active?: b
           {m.state === "FINAL" ? `Answer: ${verdict(m.verdict)}` : chanceText(chance)} · {gen(yes + no)} GEN staked
         </span>
       </div>
-      {m.state === "OPEN" ? (
+      {m.state === "OPEN" && Date.parse(m.trading_closes) > nowMs ? (
         <p className="mono mt-1">
           <span className="text-yes">Yes pays {multiplierText(multiplier("YES", yes, no))}</span>
           <span className="text-steel"> · </span>

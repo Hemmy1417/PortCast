@@ -14,6 +14,7 @@ import { WorldMap } from "@/components/WorldMap";
 import { gen, plural } from "@/lib/present";
 import { listMarkets, getStats } from "@/lib/read";
 import { useChain } from "@/lib/useChain";
+import { useNow } from "@/lib/useNow";
 
 const STEPS = [
   { n: "01", t: "Criteria frozen", d: "A market states exactly what must happen for YES, inside which dates, and what does not count. It names two to four public sources from a fixed registry of publishers. All of it is hashed and locked before anyone stakes." },
@@ -27,6 +28,7 @@ export default function Board() {
   const stats = useChain("stats", (f) => getStats(f));
   const [hover, setHover] = useState<string | null>(null);
   const router = useRouter();
+  const now = useNow();
   const items = markets.data?.items ?? [];
   const open = items.filter((m) => m.state === "OPEN").length;
 
@@ -78,7 +80,7 @@ export default function Board() {
             {markets.loading ? <div className="p-4"><Loading what="the markets" /></div> : null}
             {markets.error ? <div className="p-4"><Problem title="The board could not be read">{String((markets.error as Error).message)}</Problem></div> : null}
             {markets.data && !items.length ? <p className="muted p-4">No market has been opened yet.</p> : null}
-            {items.map((m) => <MarketRow key={m.market_id} m={m} active={hover === m.market_id} onHover={setHover} />)}
+            {items.map((m) => <MarketRow key={m.market_id} m={m} active={hover === m.market_id} onHover={setHover} nowMs={now} />)}
           </div>
         </div>
       </section>

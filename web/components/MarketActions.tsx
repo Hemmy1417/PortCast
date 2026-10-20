@@ -114,10 +114,10 @@ export function MarketActions({ m, cfg, address, position, now }: {
           <div className="text-right"><p className="figure text-[30px] leading-none text-no">{gen(no)}</p><p className="label mt-1">GEN on no</p></div>
         </div>
         <PoolBar yes={yes} no={no} className="mt-3" />
-        <div className="mt-3 flex justify-between font-mono text-[13px]">
+        {m.state === "OPEN" && now < new Date(m.trading_closes).getTime() ? <div className="mt-3 flex justify-between font-mono text-[13px]">
           <span className="text-yes">Yes pays {multiplierText(multiplier("YES", yes, no))}</span>
           <span className="text-no">No pays {multiplierText(multiplier("NO", yes, no))}</span>
-        </div>
+        </div> : null}
         {position && BigInt(position.yes_wei) + BigInt(position.no_wei) > 0n ? (
           <div className="mt-4 border-t border-rule pt-3 text-[14px]">
             <p className="label">Your position</p>
