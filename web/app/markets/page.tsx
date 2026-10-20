@@ -57,7 +57,7 @@ export default function Markets() {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[1fr_1fr]">
-        <div className="chart-water self-start overflow-hidden rounded-card p-3 lg:sticky lg:top-24">
+        <div className="self-start overflow-hidden rounded-card bg-hull p-2 lg:sticky lg:top-24">
           <WorldMap markets={items} selected={hover} onSelect={(mid) => router.push(`/markets/${mid}`)} />
         </div>
         <div className="flex flex-col gap-px overflow-hidden rounded-card border border-rule bg-rule">

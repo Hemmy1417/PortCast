@@ -61,9 +61,9 @@ export default function Board() {
       </section>
 
       <section className="grid overflow-hidden rounded-card border border-hull lg:grid-cols-[1fr_400px]">
-        <div className="chart-water relative p-3 md:p-5">
-          <WorldMap markets={items} selected={hover} onSelect={(mid) => router.push(`/markets/${mid}`)} />
-          <ul className="absolute bottom-3 left-4 flex flex-wrap gap-x-4 gap-y-1 font-mono text-[11px] uppercase tracking-[0.05em] text-deck/80">
+        <div className="relative bg-hull p-2">
+          <WorldMap height={500} markets={items} selected={hover} onSelect={(mid) => router.push(`/markets/${mid}`)} />
+          <ul className="mt-2 flex px-2 pb-1 flex-wrap gap-x-4 gap-y-1 font-mono text-[11px] uppercase tracking-[0.05em] text-deck/80">
             <li className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-signal" /> Trading</li>
             <li className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-box" /> Being resolved</li>
             <li className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-chart" /> Final</li>

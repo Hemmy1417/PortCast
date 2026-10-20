@@ -9,7 +9,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 
 import { Card, Loading, Problem, Tag } from "@/components/bits";
-import { PORTS } from "@/components/WorldMap";
+import { PORTS } from "@/lib/places";
 import { Write } from "@/components/Write";
 import { calls } from "@/lib/calls";
 import { eventType, marketName, publisherKind } from "@/lib/present";
