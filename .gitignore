@@ -11,3 +11,4 @@ audit/
 probes/out/
 web/CLAUDE.md
 web/AGENTS.md
+.claude/
